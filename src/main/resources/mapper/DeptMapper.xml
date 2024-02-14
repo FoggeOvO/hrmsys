@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.peo.mapper.DeptMapper">
+
+    <resultMap id="BaseResultMap" type="com.peo.pojo.Dept">
+            <id property="id" column="id" jdbcType="INTEGER"/>
+            <result property="depname" column="depname" jdbcType="VARCHAR"/>
+            <result property="depcode" column="depcode" jdbcType="VARCHAR"/>
+            <result property="parent" column="parent" jdbcType="VARCHAR"/>
+            <result property="type" column="type" jdbcType="VARCHAR"/>
+            <result property="visable" column="visable" jdbcType="TINYINT"/>
+            <result property="deleted" column="deleted" jdbcType="TINYINT"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,depname,depcode,
+        parent,type,visable,
+        deleted
+    </sql>
+</mapper>

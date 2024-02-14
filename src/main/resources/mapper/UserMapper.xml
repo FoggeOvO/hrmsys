@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.peo.mapper.UserMapper">
+
+    <resultMap id="BaseResultMap" type="com.peo.pojo.User">
+            <id property="id" column="id" jdbcType="INTEGER"/>
+            <result property="username" column="username" jdbcType="VARCHAR"/>
+            <result property="password" column="password" jdbcType="VARCHAR"/>
+            <result property="type" column="type" jdbcType="VARCHAR"/>
+            <result property="gender" column="gender" jdbcType="VARCHAR"/>
+            <result property="lastname" column="lastname" jdbcType="VARCHAR"/>
+            <result property="level" column="level" jdbcType="VARCHAR"/>
+            <result property="workcode" column="workcode" jdbcType="VARCHAR"/>
+            <result property="position" column="position" jdbcType="VARCHAR"/>
+            <result property="depid" column="depid" jdbcType="INTEGER"/>
+            <result property="hiredate" column="hiredate" jdbcType="VARCHAR"/>
+            <result property="deleted" column="deleted" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,username,password,
+        type,gender,lastname,
+        level,workcode,position,
+        depid,hiredate,deleted
+    </sql>
+    <select id="getUser" resultType="com.peo.vo.UserVo">
+        SELECT lastname, workcode, hiredate, POSITION, LEVEL, gender, hiredate, depid,
+               actConfData, costcenter, houseAllance, isCN, isConf, isTech, mealAllance, NATIONAL,
+            remark, salGroup  FROM t_user t1 INNER JOIN t_filed t2 ON t1.id=t2.id AND t1.deleted=0
+    </select>
+</mapper>
