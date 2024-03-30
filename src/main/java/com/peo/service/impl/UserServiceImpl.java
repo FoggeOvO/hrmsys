@@ -39,7 +39,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     @Override
     public Result login(User user) {
         LambdaQueryWrapper<User> lambdaQueryWrapper = new LambdaQueryWrapper<>();
-        lambdaQueryWrapper.eq(User::getWorkcode, user.getWorkcode());
+        lambdaQueryWrapper.eq(User::getUsername, user.getUsername());
 
         //1.根据传入的username查找DB中是否有相应人员
         User isUser = loginMapper.selectOne(lambdaQueryWrapper);

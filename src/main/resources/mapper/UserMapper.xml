@@ -28,6 +28,6 @@
     <select id="getUser" resultType="com.peo.vo.UserVo">
         SELECT lastname, workcode, hiredate, POSITION, LEVEL, gender, hiredate, depid,
                actConfData, costcenter, houseAllance, isCN, isConf, isTech, mealAllance, NATIONAL,
-            remark, salGroup  FROM t_user t1 INNER JOIN t_filed t2 ON t1.id=t2.id AND t1.deleted=0
+            remark, salGroup  FROM t_hrm_user t1 INNER JOIN t_sys_filed t2 ON t1.id=t2.id AND t1.deleted=0
     </select>
 </mapper>

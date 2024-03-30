@@ -39,8 +39,6 @@ public class JwtHelper {
         return userId.longValue();
     }
 
-
-
     //判断token是否有效
     public boolean isExpiration(String token){
         try {
