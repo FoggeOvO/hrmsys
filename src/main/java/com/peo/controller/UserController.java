@@ -7,6 +7,8 @@ import com.peo.service.UserService;
 import com.peo.util.Result;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("user")
 public class UserController {
@@ -22,16 +24,17 @@ public class UserController {
         return userService.getUser();
     }
 
-    @GetMapping("getUserByDepId/{depId}")
+    @GetMapping("getUserByDepId")
     @TokenRequired
-    public Result getUserByDepId(@PathVariable Integer depId){
+    public Result getUserByDepId(@RequestParam List<Integer> depId){
+        System.out.println(depId);
         return userService.getUserByDepId(depId);
     }
 
-    @GetMapping("getUserById/{id}")
+    @GetMapping("getUserById/{ids}")
     @TokenRequired
-    public Result getUserById(@PathVariable Integer id){
-        return userService.getUserById(id);
+    public Result getUserById(@PathVariable Integer ids){
+        return userService.getUserById(ids);
     }
 
     @PutMapping("updateUserById")

@@ -4,6 +4,8 @@ import com.peo.pojo.User;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.peo.util.Result;
 
+import java.util.List;
+
 /**
 * @author lvlvlove
 * @description 针对表【t_user】的数据库操作Service
@@ -15,7 +17,7 @@ public interface UserService extends IService<User> {
 
     Result getUser();
 
-    Result getUserByDepId(Integer depId);
+    Result getUserByDepId(List<Integer> depId);
 
     Result getUserById(Integer id);
 

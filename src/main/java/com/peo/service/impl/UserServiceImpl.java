@@ -62,7 +62,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     }
 
     @Override
-    public Result getUserByDepId(Integer depId) {
+    public Result getUserByDepId(List<Integer> depId) {
         LambdaQueryWrapper<User> lambdaQueryWrapper = new LambdaQueryWrapper<>();
         lambdaQueryWrapper.eq(User::getDepid, depId);
         List<User> users = userMapper.selectList(lambdaQueryWrapper);
@@ -70,9 +70,9 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     }
 
     @Override
-    public Result getUserById(Integer id) {
+    public Result getUserById(Integer  id) {
         LambdaQueryWrapper<User> lambdaQueryWrapper = new LambdaQueryWrapper<>();
-        lambdaQueryWrapper.eq(User::getId, id);
+        lambdaQueryWrapper.in(User::getId,  id);
         User user = userMapper.selectOne(lambdaQueryWrapper);
         return Result.ok(user);
     }

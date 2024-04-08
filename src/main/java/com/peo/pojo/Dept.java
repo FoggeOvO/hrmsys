@@ -15,7 +15,7 @@ public class Dept implements Serializable {
 
     private String depcode;
 
-    private String parent;
+    private Integer parent;
 
     private String type;
 
@@ -52,11 +52,11 @@ public class Dept implements Serializable {
         this.depcode = depcode;
     }
 
-    public String getParent() {
+    public Integer getParent() {
         return parent;
     }
 
-    public void setParent(String parent) {
+    public void setParent(Integer parent) {
         this.parent = parent;
     }
 
