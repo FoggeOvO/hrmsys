@@ -29,31 +29,7 @@ import java.util.Objects;
 public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements UserService {
 
     @Autowired
-    JwtHelper jwtHelper;
-
-    @Autowired
     UserMapper userMapper;
-    @Autowired
-    LoginMapper loginMapper;
-
-    @Override
-    public Result login(User user) {
-        LambdaQueryWrapper<User> lambdaQueryWrapper = new LambdaQueryWrapper<>();
-        lambdaQueryWrapper.eq(User::getUsername, user.getUsername());
-
-        //1.根据传入的username查找DB中是否有相应人员
-        User isUser = loginMapper.selectOne(lambdaQueryWrapper);
-        if (isUser == null) {
-            return Result.failure(ResultCodeEnum.USERNAME_ERROR);
-        }
-        if (!Objects.equals(isUser.getPassword(), user.getPassword())) {
-            return Result.failure(ResultCodeEnum.PASSWORD_ERROR);
-        }
-
-        String token = jwtHelper.createToken(Long.valueOf(isUser.getId()));
-
-        return Result.ok(token);
-    }
 
     @Override
     public Result getUser() {
@@ -64,7 +40,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     @Override
     public Result getUserByDepId(List<Integer> depId) {
         LambdaQueryWrapper<User> lambdaQueryWrapper = new LambdaQueryWrapper<>();
-        lambdaQueryWrapper.eq(User::getDepid, depId);
+        lambdaQueryWrapper.in(User::getDepid, depId);
         List<User> users = userMapper.selectList(lambdaQueryWrapper);
         return Result.ok(users);
     }
@@ -72,7 +48,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     @Override
     public Result getUserById(Integer  id) {
         LambdaQueryWrapper<User> lambdaQueryWrapper = new LambdaQueryWrapper<>();
-        lambdaQueryWrapper.in(User::getId,  id);
+        lambdaQueryWrapper.eq(User::getId,  id);
         User user = userMapper.selectOne(lambdaQueryWrapper);
         return Result.ok(user);
     }

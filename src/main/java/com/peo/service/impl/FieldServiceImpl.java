@@ -2,7 +2,7 @@ package com.peo.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.peo.pojo.Filed;
-import com.peo.service.FiledService;
+import com.peo.service.FieldService;
 import com.peo.mapper.FiledMapper;
 import org.springframework.stereotype.Service;
 
@@ -12,8 +12,8 @@ import org.springframework.stereotype.Service;
 * @createDate 2024-01-26 11:13:43
 */
 @Service
-public class FiledServiceImpl extends ServiceImpl<FiledMapper, Filed>
-    implements FiledService {
+public class FieldServiceImpl extends ServiceImpl<FiledMapper, Filed>
+    implements FieldService {
 
 }
 

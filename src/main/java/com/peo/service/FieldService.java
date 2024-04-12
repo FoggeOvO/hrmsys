@@ -8,6 +8,6 @@ import com.baomidou.mybatisplus.extension.service.IService;
 * @description 针对表【t_filed】的数据库操作Service
 * @createDate 2024-01-26 11:13:43
 */
-public interface FiledService extends IService<Filed> {
+public interface FieldService extends IService<Filed> {
 
 }

@@ -6,4 +6,5 @@ import com.peo.pojo.User;
 
 @InterceptorIgnore(dataPermission = "true")
 public interface LoginMapper extends BaseMapper<User> {
+
 }
