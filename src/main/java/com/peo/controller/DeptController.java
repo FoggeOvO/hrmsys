@@ -14,8 +14,6 @@ public class DeptController {
     @Autowired
     DeptService deptService;
 
-
-
     @GetMapping("getDept")
     @TokenRequired
     public Result getDept(){
