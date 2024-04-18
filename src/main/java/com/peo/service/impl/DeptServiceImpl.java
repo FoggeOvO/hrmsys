@@ -1,6 +1,8 @@
 package com.peo.service.impl;
 
 import com.alibaba.fastjson2.JSON;
+import com.alibaba.fastjson2.JSONArray;
+import com.alibaba.fastjson2.JSONObject;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.peo.pojo.Dept;
@@ -36,10 +38,12 @@ public class DeptServiceImpl extends ServiceImpl<DeptMapper, Dept> implements De
         lambdaQueryWrapper.select(Dept::getDepname,Dept::getParent,Dept::getId).eq(Dept::getDeleted,0);;
         List<Dept> deps = deptMapper.selectList(lambdaQueryWrapper);
         DeptVo root = buildDeptTree(deps);
-        if(root == null){
+        JSONObject depJson = JSON.parseObject(root.toString());
+        JSONArray depArray = JSON.parseArray("[" + depJson.toString() + "]");
+        if(depArray == null){
             return Result.failure(ResultCodeEnum.NODATA);
         }
-        return Result.ok(root.toString());
+        return Result.ok(depArray);
     }
 
     public DeptVo buildDeptTree(List<Dept> deps) {

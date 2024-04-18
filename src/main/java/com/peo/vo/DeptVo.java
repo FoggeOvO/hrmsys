@@ -22,9 +22,11 @@ public class DeptVo {
     @Override
     public String toString() {
         return "{" +
-                "title:'" + title + '\'' +
-                ", key:" + key +
-                ", children:" + children +
+                "\"title\":\"" + title + '\"' +
+                ", \"key\":" + key +
+                ", \"children\":" + children +
                 "}";
     }
+
+
 }
