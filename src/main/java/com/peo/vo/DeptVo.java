@@ -11,6 +11,7 @@ public class DeptVo {
     String code;
     Integer type;
     String note;
+    Integer deleted;
     List<DeptVo> children = new ArrayList<>();
 
     public DeptVo(int key, String title) {
@@ -18,12 +19,13 @@ public class DeptVo {
         this.title = title;
     }
 
-    public DeptVo(Integer key,String title, String code, Integer type, String note) {
-        this.key = key;
+    public DeptVo(Integer key, String title, String code, Integer type, String note, Integer deleted) {
         this.title = title;
+        this.key = key;
         this.code = code;
         this.type = type;
         this.note = note;
+        this.deleted = deleted;
     }
 
     public void addChild(DeptVo child) {
@@ -38,6 +40,7 @@ public class DeptVo {
                 ", \"code\":\"" + code + "\"" +
                 ", \"type\":" + type +
                 ", \"note\":\"" + note + "\"" +
+                ", \"status\":" + deleted  +
                 ", \"children\":" + children +
                 "}";
     }

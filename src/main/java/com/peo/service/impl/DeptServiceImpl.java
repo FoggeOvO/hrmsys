@@ -35,7 +35,7 @@ public class DeptServiceImpl extends ServiceImpl<DeptMapper, Dept> implements De
     @Override
     public Result getDept() {
         LambdaQueryWrapper<Dept> lambdaQueryWrapper = new LambdaQueryWrapper<>();
-        lambdaQueryWrapper.select(Dept::getDepname,Dept::getParent,Dept::getId, Dept::getDepcode, Dept::getType, Dept::getNote).eq(Dept::getDeleted,0);;
+        lambdaQueryWrapper.select(Dept::getDepname,Dept::getParent,Dept::getId, Dept::getDepcode, Dept::getType, Dept::getNote, Dept::getDeleted).eq(Dept::getDeleted,0);;
         List<Dept> deps = deptMapper.selectList(lambdaQueryWrapper);
         DeptVo root = buildDeptTree(deps);
         JSONObject depJson = JSON.parseObject(root.toString());
@@ -52,7 +52,7 @@ public class DeptServiceImpl extends ServiceImpl<DeptMapper, Dept> implements De
 
         // 首先将所有 Dept 转换为 DeptVo 并存储到 Map 中以便快速查找
         for (Dept dept : deps) {
-            voMap.put(dept.getId(), new DeptVo(dept.getId(), dept.getDepname(), dept.getDepcode(), dept.getType(), dept.getNote()));
+            voMap.put(dept.getId(), new DeptVo(dept.getId(), dept.getDepname(), dept.getDepcode(), dept.getType(), dept.getNote(), dept.getDeleted()));
         }
         // 遍历 Dept 列表，构建树形结构
         for (Dept dept : deps) {
