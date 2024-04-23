@@ -19,4 +19,11 @@
         parent,type,visable,
         deleted
     </sql>
+    <select id="getDep" resultType="com.peo.pojo.Dept">
+        SELECT * FROM t_hrm_dept t1 INNER JOIN t_auth_dept t2 ON t1.id=t2.dep_id
+        <if test="id != null">
+        AND t2.user_id=#{id}
+        </if>
+    </select>
+
 </mapper>

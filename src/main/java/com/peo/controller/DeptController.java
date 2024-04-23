@@ -2,9 +2,11 @@ package com.peo.controller;
 
 
 
+import com.alibaba.fastjson2.JSONArray;
 import com.peo.annotation.TokenRequired;
 import com.peo.service.DeptService;
 import com.peo.util.Result;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,7 +18,9 @@ public class DeptController {
 
     @GetMapping("getDept")
     @TokenRequired
-    public Result getDept(){
-        return deptService.getDept();
+    public Result getDept(HttpServletRequest res){
+        String token = res.getHeader("token");
+        JSONArray depts = deptService.getDept(token);
+        return Result.ok(depts);
     }
 }

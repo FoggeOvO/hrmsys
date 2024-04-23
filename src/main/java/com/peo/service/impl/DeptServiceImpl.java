@@ -9,8 +9,6 @@ import com.peo.pojo.Dept;
 import com.peo.service.DeptService;
 import com.peo.mapper.DeptMapper;
 import com.peo.util.JwtHelper;
-import com.peo.util.Result;
-import com.peo.util.ResultCodeEnum;
 import com.peo.vo.DeptVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,23 +25,32 @@ import java.util.Map;
 */
 @Service
 public class DeptServiceImpl extends ServiceImpl<DeptMapper, Dept> implements DeptService {
-    @Autowired
-    JwtHelper jwtHelper;
+
     @Autowired
     DeptMapper deptMapper;
 
+    @Autowired
+    JwtHelper jwtHelper;
+
     @Override
-    public Result getDept() {
+    public JSONArray getDept(String token) {
+        Integer userId = jwtHelper.getUserId(token).intValue();
+        if(userId.equals(1)){
+            return getAllDept();
+        }
+        List<Dept> deps = deptMapper.getDep(userId);
+        DeptVo root = buildDeptTree(deps);
+        JSONObject depJson = JSON.parseObject(root.toString());
+        return JSON.parseArray("[" + depJson.toString() + "]");
+    }
+    @Override
+    public JSONArray getAllDept() {
         LambdaQueryWrapper<Dept> lambdaQueryWrapper = new LambdaQueryWrapper<>();
         lambdaQueryWrapper.select(Dept::getDepname,Dept::getParent,Dept::getId, Dept::getDepcode, Dept::getType, Dept::getNote, Dept::getDeleted).eq(Dept::getDeleted,0);;
         List<Dept> deps = deptMapper.selectList(lambdaQueryWrapper);
         DeptVo root = buildDeptTree(deps);
         JSONObject depJson = JSON.parseObject(root.toString());
-        JSONArray depArray = JSON.parseArray("[" + depJson.toString() + "]");
-        if(depArray == null){
-            return Result.failure(ResultCodeEnum.NODATA);
-        }
-        return Result.ok(depArray);
+        return JSON.parseArray("[" + depJson.toString() + "]");
     }
 
     public DeptVo buildDeptTree(List<Dept> deps) {

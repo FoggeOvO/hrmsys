@@ -1,5 +1,6 @@
 package com.peo.service;
 
+import com.alibaba.fastjson2.JSONArray;
 import com.peo.pojo.Dept;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.peo.util.Result;
@@ -11,5 +12,6 @@ import com.peo.util.Result;
 */
 public interface DeptService extends IService<Dept> {
 
-    Result getDept();
+    JSONArray getDept(String token);
+    JSONArray getAllDept();
 }

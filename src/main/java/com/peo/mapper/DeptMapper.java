@@ -3,6 +3,8 @@ package com.peo.mapper;
 import com.peo.pojo.Dept;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
+import java.util.List;
+
 /**
 * @author lvlvlove
 * @description 针对表【t_dept】的数据库操作Mapper
@@ -10,7 +12,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 * @Entity com.peo.pojo.Dept
 */
 public interface DeptMapper extends BaseMapper<Dept> {
-
+    List<Dept> getDep(Integer userId);
 }
 
 

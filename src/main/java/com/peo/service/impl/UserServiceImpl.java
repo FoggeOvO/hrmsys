@@ -31,56 +31,43 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     @Autowired
     UserMapper userMapper;
 
+
     @Override
-    public Result getUser() {
-        List<UserVo> user = userMapper.getUser();
-        return Result.ok(user);
+    public List<UserVo> getUser(List<Integer> depIds) {
+        return userMapper.getUser(depIds);
     }
 
     @Override
-    public Result getUserByDepId(List<Integer> depId) {
+    public List<User> getUserByDepId(List<Integer> depId) {
         LambdaQueryWrapper<User> lambdaQueryWrapper = new LambdaQueryWrapper<>();
         lambdaQueryWrapper.in(User::getDepid, depId);
-        List<User> users = userMapper.selectList(lambdaQueryWrapper);
-        return Result.ok(users);
+        return userMapper.selectList(lambdaQueryWrapper);
     }
 
     @Override
-    public Result getUserById(Integer  id) {
+    public User getUserById(Integer id) {
         LambdaQueryWrapper<User> lambdaQueryWrapper = new LambdaQueryWrapper<>();
-        lambdaQueryWrapper.eq(User::getId,  id);
-        User user = userMapper.selectOne(lambdaQueryWrapper);
-        return Result.ok(user);
+        lambdaQueryWrapper.eq(User::getId, id);
+        return userMapper.selectOne(lambdaQueryWrapper);
     }
 
     @Override
-    public Result updateUserById(User user) {
+    public Integer updateUserById(User user) {
         LambdaQueryWrapper<User> lambdaQueryWrapper = new LambdaQueryWrapper<>();
         lambdaQueryWrapper.eq(User::getId, user.getId());
-        int update = userMapper.update(user, lambdaQueryWrapper);
-        if (update == 0) {
-            return Result.failure(ResultCodeEnum.NOTCHANGE);
-        }
-        return Result.ok(update);
+        return userMapper.update(user, lambdaQueryWrapper);
     }
 
     @Override
-    public Result createUser(User user) {
-        int insert = userMapper.insert(user);
-        if (insert == 0) {
-            return Result.failure(ResultCodeEnum.NOTCHANGE);
-        }
-        return Result.ok(insert);
+    public Integer createUser(User user) {
+        return userMapper.insert(user);
     }
 
     @Override
-    public Result deleteUser(User user) {
-        int del = userMapper.deleteById(user);
-        if (del == 0) {
-            return Result.failure(ResultCodeEnum.NOTCHANGE);
-        }
-        return Result.ok(del);
+    public Integer deleteUser(User user) {
+        return userMapper.deleteById(user);
     }
+
 
 }
 

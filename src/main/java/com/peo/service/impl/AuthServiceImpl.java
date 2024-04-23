@@ -45,7 +45,6 @@ public class AuthServiceImpl  extends ServiceImpl<ColumnMapper, Column>
 
     @Override
     public Result getCurrentUser(String token) {
-
         Integer userId = jwtHelper.getUserId(token).intValue();
         LambdaQueryWrapper<User> lambdaQueryWrapper = new LambdaQueryWrapper<>();
         lambdaQueryWrapper.eq(User::getId,userId);
@@ -56,6 +55,5 @@ public class AuthServiceImpl  extends ServiceImpl<ColumnMapper, Column>
         }
         return Result.ok(currentUser);
     }
-
 
 }
