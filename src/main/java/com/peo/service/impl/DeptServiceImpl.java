@@ -13,16 +13,17 @@ import com.peo.vo.DeptVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 
 /**
-* @author lvlvlove
-* @description 针对表【t_dept】的数据库操作Service实现
-* @createDate 2024-01-26 11:13:43
-*/
+ * @author lvlvlove
+ * @description 针对表【t_dept】的数据库操作Service实现
+ * @createDate 2024-01-26 11:13:43
+ */
 @Service
 public class DeptServiceImpl extends ServiceImpl<DeptMapper, Dept> implements DeptService {
 
@@ -35,18 +36,24 @@ public class DeptServiceImpl extends ServiceImpl<DeptMapper, Dept> implements De
     @Override
     public JSONArray getDept(String token) {
         Integer userId = jwtHelper.getUserId(token).intValue();
-        if(userId.equals(1)){
+        if (userId.equals(1)) {
             return getAllDept();
         }
         List<Dept> deps = deptMapper.getDep(userId);
         DeptVo root = buildDeptTree(deps);
         JSONObject depJson = JSON.parseObject(root.toString());
-        return JSON.parseArray("[" + depJson.toString() + "]");
+        JSONArray jsonArray = JSON.parseArray("[" + depJson.toString() + "]");
+        List<Integer> depIds = new ArrayList<>();
+        return jsonArray;
     }
+
+
+
     @Override
     public JSONArray getAllDept() {
         LambdaQueryWrapper<Dept> lambdaQueryWrapper = new LambdaQueryWrapper<>();
-        lambdaQueryWrapper.select(Dept::getDepname,Dept::getParent,Dept::getId, Dept::getDepcode, Dept::getType, Dept::getNote, Dept::getDeleted).eq(Dept::getDeleted,0);;
+        lambdaQueryWrapper.select(Dept::getDepname, Dept::getParent, Dept::getId, Dept::getDepcode, Dept::getType, Dept::getNote, Dept::getDeleted).eq(Dept::getDeleted, 0);
+        ;
         List<Dept> deps = deptMapper.selectList(lambdaQueryWrapper);
         DeptVo root = buildDeptTree(deps);
         JSONObject depJson = JSON.parseObject(root.toString());

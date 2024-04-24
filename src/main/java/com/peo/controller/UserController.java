@@ -3,6 +3,7 @@ package com.peo.controller;
 import com.peo.annotation.TokenRequired;
 import com.peo.pojo.User;
 import com.peo.service.AuthService;
+import com.peo.service.DeptService;
 import com.peo.service.UserService;
 
 import com.peo.util.Result;

@@ -5,6 +5,8 @@ import com.peo.pojo.Dept;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.peo.util.Result;
 
+import java.util.List;
+
 /**
 * @author lvlvlove
 * @description 针对表【t_dept】的数据库操作Service
@@ -14,4 +16,5 @@ public interface DeptService extends IService<Dept> {
 
     JSONArray getDept(String token);
     JSONArray getAllDept();
+
 }
