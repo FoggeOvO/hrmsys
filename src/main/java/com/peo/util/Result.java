@@ -9,6 +9,7 @@ public class Result {
     private Integer code;
     private String msg;
     private Object data;
+    private Integer count;
     private Long timestamp;
 
     public Result() {
@@ -18,6 +19,14 @@ public class Result {
         this.code = code;
         this.msg = msg;
         this.data = data;
+        this.timestamp = timestamp;
+    }
+
+    public Result(Integer code, String msg, Object data, Integer count, Long timestamp) {
+        this.code = code;
+        this.msg = msg;
+        this.data = data;
+        this.count = count;
         this.timestamp = timestamp;
     }
 
@@ -42,7 +51,7 @@ public class Result {
     }
 
     public static Result ok(List<?> data) {
-        return new Result(200, "success", data, System.currentTimeMillis());
+        return new Result(200, "success", data, data.size() , System.currentTimeMillis());
     }
 
     public static Result failure(String msg) {

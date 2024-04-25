@@ -8,6 +8,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.peo.pojo.Dept;
 import com.peo.service.DeptService;
 import com.peo.mapper.DeptMapper;
+import com.peo.util.JSONUtil;
 import com.peo.util.JwtHelper;
 import com.peo.vo.DeptVo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,12 +27,13 @@ import java.util.Map;
  */
 @Service
 public class DeptServiceImpl extends ServiceImpl<DeptMapper, Dept> implements DeptService {
+    private final DeptMapper deptMapper;
+    private final JwtHelper jwtHelper;
 
-    @Autowired
-    DeptMapper deptMapper;
-
-    @Autowired
-    JwtHelper jwtHelper;
+    public DeptServiceImpl(DeptMapper deptMapper, JwtHelper jwtHelper){
+        this.deptMapper = deptMapper;
+        this.jwtHelper = jwtHelper;
+    }
 
     @Override
     public JSONArray getDept(String token) {
@@ -42,9 +44,7 @@ public class DeptServiceImpl extends ServiceImpl<DeptMapper, Dept> implements De
         List<Dept> deps = deptMapper.getDep(userId);
         DeptVo root = buildDeptTree(deps);
         JSONObject depJson = JSON.parseObject(root.toString());
-        JSONArray jsonArray = JSON.parseArray("[" + depJson.toString() + "]");
-        List<Integer> depIds = new ArrayList<>();
-        return jsonArray;
+        return JSON.parseArray("[" + depJson.toString() + "]");
     }
 
 
@@ -60,7 +60,15 @@ public class DeptServiceImpl extends ServiceImpl<DeptMapper, Dept> implements De
         return JSON.parseArray("[" + depJson.toString() + "]");
     }
 
-    public DeptVo buildDeptTree(List<Dept> deps) {
+    @Override
+    public List<Integer> getDepIds(String token) {
+        JSONArray dept = getDept(token);
+        List<Integer> depIds = new ArrayList<>();
+        JSONUtil.getDepIds(dept, depIds);
+        return depIds;
+    }
+
+    private DeptVo buildDeptTree(List<Dept> deps) {
         Map<Integer, DeptVo> voMap = new HashMap<>();
         DeptVo root = null;
 
@@ -80,9 +88,10 @@ public class DeptServiceImpl extends ServiceImpl<DeptMapper, Dept> implements De
                 }
             }
         }
-
         return root;  // 返回树的根节点
     }
+
+
 }
 
 

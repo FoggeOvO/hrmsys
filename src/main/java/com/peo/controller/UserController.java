@@ -1,5 +1,7 @@
 package com.peo.controller;
 
+import com.alibaba.fastjson2.JSONArray;
+import com.alibaba.fastjson2.JSONObject;
 import com.peo.annotation.TokenRequired;
 import com.peo.pojo.User;
 import com.peo.service.AuthService;
@@ -23,20 +25,26 @@ public class UserController {
         this.userService = userService;
     }
 
-    @GetMapping ("initUserData")
+    @GetMapping ("getUser")
     @TokenRequired
-    public Result initUserData(@RequestParam List<Integer> depIds) {
-        System.out.println("depIds ==============>" + depIds);
-        List<UserVo> users = userService.getUser(depIds);
+    public Result getUser(HttpServletRequest request) {
+        String token = request.getHeader("token");
+        List<User> users = userService.getUser(token);
         return Result.ok(users);
     }
 
     @GetMapping("getUserByDepId")
     @TokenRequired
-    public Result getUserByDepId(@RequestParam List<Integer> depId) {
-        System.out.println(depId);
-        List<User> user = userService.getUserByDepId(depId);
+    public Result getUserByDepId(@RequestParam List<Integer> depId, Integer current) {
+        List<User> user = userService.getUserByDepId(depId, current);
         return Result.ok(user);
+    }
+
+    @GetMapping("getUserCount")
+    @TokenRequired
+    public Result getUserCount(@RequestParam List<Integer> depId) {
+        Integer count = userService.getUserCount(depId);
+        return Result.ok(count);
     }
 
     @GetMapping("getUserById/{ids}")
@@ -60,11 +68,13 @@ public class UserController {
         return Result.ok(i);
     }
 
-
     @DeleteMapping("deleteUser")
     @TokenRequired
     public Result deleteUser(@RequestBody User user) {
         Integer i = userService.deleteUser(user);
         return Result.ok(i);
     }
+
+
+
 }

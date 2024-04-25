@@ -2,8 +2,7 @@ package com.peo.service;
 
 import com.peo.pojo.User;
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.peo.util.Result;
-import com.peo.vo.UserVo;
+
 
 import java.util.List;
 
@@ -14,9 +13,11 @@ import java.util.List;
 */
 public interface UserService extends IService<User> {
 
-    List<UserVo> getUser(List<Integer> depIds);
+    List<User> getUser(String token);
 
-    List<User> getUserByDepId(List<Integer> depId);
+    Integer getUserCount(List<Integer> depId);
+
+    List<User> getUserByDepId(List<Integer> depId, Integer current);
 
     User getUserById(Integer id);
 

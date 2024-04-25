@@ -17,4 +17,6 @@ public interface DeptService extends IService<Dept> {
     JSONArray getDept(String token);
     JSONArray getAllDept();
 
+    List<Integer> getDepIds(String token);
+
 }

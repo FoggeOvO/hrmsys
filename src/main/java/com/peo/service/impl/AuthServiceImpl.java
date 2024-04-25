@@ -19,10 +19,13 @@ import java.util.Objects;
 public class AuthServiceImpl  extends ServiceImpl<ColumnMapper, Column>
         implements AuthService {
 
-    @Autowired
-    JwtHelper jwtHelper;
-    @Autowired
-    LoginMapper loginMapper;
+    private final JwtHelper jwtHelper;
+    private final LoginMapper loginMapper;
+
+    public AuthServiceImpl(JwtHelper jwtHelper, LoginMapper loginMapper){
+        this.jwtHelper = jwtHelper;
+        this.loginMapper = loginMapper;
+    }
 
     @Override
     public Result getToken(User user) {
