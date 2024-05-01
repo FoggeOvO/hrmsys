@@ -11,10 +11,8 @@ public class UserListener extends AnalysisEventListener<User> {
     private static final int BATCH_COUNT = 10000;
     private List<User> list = new ArrayList<>();
 
-    private User user;
 
-    public UserListener(User user){
-        this.user = user;
+    public UserListener(){
     }
     @Override
     public void invoke(User user, AnalysisContext analysisContext) {

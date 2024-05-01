@@ -12,6 +12,6 @@ import java.io.IOException;
 public class ImportServiceImpl implements ImportService {
     @Override
     public void ImportUser(MultipartFile file) throws IOException {
-        EasyExcel.read(file.getInputStream(), User.class, new UserListener(new User())).doReadAll();
+        EasyExcel.read(file.getInputStream(), User.class, new UserListener()).sheet().doRead();
     }
 }
