@@ -42,7 +42,6 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         this.deptService = deptService;
     }
 
-
     @Override
     public List<User> getUser(String token) {
         JSONArray dept = deptService.getDept(token);
