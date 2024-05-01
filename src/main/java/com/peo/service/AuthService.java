@@ -6,6 +6,8 @@ import com.peo.util.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 
 public interface AuthService {
-    Result getToken(User user);
-    Result getCurrentUser(String token);
+    String getToken(User user);
+    User getCurrentUser(String token);
+
+
 }

@@ -42,6 +42,9 @@ public class DeptServiceImpl extends ServiceImpl<DeptMapper, Dept> implements De
             return getAllDept();
         }
         List<Dept> deps = deptMapper.getDep(userId);
+        if(deps == null || deps.isEmpty()){
+            return new JSONArray();
+        }
         DeptVo root = buildDeptTree(deps);
         JSONObject depJson = JSON.parseObject(root.toString());
         return JSON.parseArray("[" + depJson.toString() + "]");
@@ -53,7 +56,6 @@ public class DeptServiceImpl extends ServiceImpl<DeptMapper, Dept> implements De
     public JSONArray getAllDept() {
         LambdaQueryWrapper<Dept> lambdaQueryWrapper = new LambdaQueryWrapper<>();
         lambdaQueryWrapper.select(Dept::getDepname, Dept::getParent, Dept::getId, Dept::getDepcode, Dept::getType, Dept::getNote, Dept::getDeleted).eq(Dept::getDeleted, 0);
-        ;
         List<Dept> deps = deptMapper.selectList(lambdaQueryWrapper);
         DeptVo root = buildDeptTree(deps);
         JSONObject depJson = JSON.parseObject(root.toString());

@@ -33,6 +33,9 @@ public class User implements Serializable {
     private Integer depid;
 
     private String hiredate;
+
+    private Integer status;
+
     private Integer access;
 
     @TableLogic
