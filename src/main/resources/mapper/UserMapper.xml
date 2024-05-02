@@ -34,4 +34,12 @@
             </if>
         </where>
     </select>
+
+    <insert id="importData" parameterType="java.util.List">
+        insert into t_temp_user(username,gender,lastname,level,workcode,position,depid)
+        values 
+            <foreach collection="list" item="user" index="index" separator=",">
+                (#{user.username}, #{user.gender}, #{user.lastname}, #{user.level}, #{user.workcode}, #{user.position}, #{user.depid})
+            </foreach>
+    </insert>
 </mapper>

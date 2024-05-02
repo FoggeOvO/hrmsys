@@ -54,6 +54,13 @@ public class UserController {
         return Result.ok(user);
     }
 
+    @GetMapping("getUserByAccess/{access}")
+    @TokenRequired
+    public Result getUserByAccess(@PathVariable Integer access) {
+        List<User> users = userService.getUserByAccess(access);
+        return Result.ok(users);
+    }
+
     @PutMapping("updateUserById")
     @TokenRequired
     public Result updateUserById(@RequestBody User user) {

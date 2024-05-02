@@ -18,7 +18,7 @@ public interface UserService extends IService<User> {
     Integer getUserCount(List<Integer> depId);
 
     List<User> getUserByDepId(List<Integer> depId, Integer current);
-
+    List<User> getUserByAccess(Integer access);
     User getUserById(Integer id);
 
     Integer updateUserById(User user);
