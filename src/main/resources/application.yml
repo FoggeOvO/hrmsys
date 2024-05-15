@@ -18,6 +18,8 @@ spring:
     multipart:
       max-request-size: 5MB
       max-file-size: 5MB
+  banner:
+    location: classpath:banner.txt
 
 
 mybatis-plus:
@@ -35,3 +37,4 @@ jwt:
   token:
     tokenExpiration: 1440 #有效时间,单位分钟
     tokenSignKey: prop123456  #当前程序签名秘钥 自定义
+

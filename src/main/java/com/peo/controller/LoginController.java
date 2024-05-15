@@ -23,29 +23,29 @@ import java.util.Objects;
 @RequestMapping("auth")
 public class LoginController {
 
-    private final AuthService authService;
+//    private final AuthService authService;
+//
+//    public LoginController(AuthService authService){
+//        this.authService = authService;
+//    }
 
-    public LoginController(AuthService authService){
-        this.authService = authService;
-    }
+//    @PostMapping("getToken")
+//    public Result getToken(@RequestBody User user){
+//        String token = authService.getToken(user);
+//        return Result.ok(token);
+//    }
 
-    @PostMapping("getToken")
-    public Result getToken(@RequestBody User user){
-        String token = authService.getToken(user);
-        return Result.ok(token);
-    }
-
-    @GetMapping ("getCurrentUser")
-    @TokenRequired
-    public Result getCurrentUser(HttpServletRequest request){
-        String token = request.getHeader("token");
-        User currentUser = authService.getCurrentUser(token);
-        if(currentUser == null){
-            return Result.failure(ResultCodeEnum.NODATA);
-        }
-        return Result.ok(currentUser);
-
-    }
+//    @GetMapping ("getCurrentUser")
+//    @TokenRequired
+//    public Result getCurrentUser(HttpServletRequest request){
+//        String token = request.getHeader("token");
+//        User currentUser = authService.getCurrentUser(token);
+//        if(currentUser == null){
+//            return Result.failure(ResultCodeEnum.NODATA);
+//        }
+//        return Result.ok(currentUser);
+//
+//    }
 
 
 }
