@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.peo.mapper.FieldMapper">
+
+    <resultMap id="BaseResultMap" type="com.peo.pojo.Field">
+            <id property="id" column="id" jdbcType="INTEGER"/>
+            <result property="userId" column="user_id" jdbcType="INTEGER"/>
+            <result property="house" column="house" jdbcType="INTEGER"/>
+            <result property="meal" column="meal" jdbcType="INTEGER"/>
+            <result property="tech" column="tech" jdbcType="INTEGER"/>
+            <result property="annul" column="annul" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,userId,house,
+        meal,tech,annul
+    </sql>
+</mapper>

@@ -43,7 +43,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     }
 
     @Override
-    public List<User> getUser(String token) {
+    public List<UserVo> getUser(String token) {
         JSONArray dept = deptService.getDept(token);
         List<Integer> depIds = new ArrayList<>();
         JSONUtil.getDepIds(dept,depIds);
@@ -58,12 +58,13 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     }
 
     @Override
-    public List<User> getUserByDepId(List<Integer> depId, Integer current) {
-        LambdaQueryWrapper<User> lambdaQueryWrapper = new LambdaQueryWrapper<>();
-        Page<User> page = new Page<>(current,10);
-        lambdaQueryWrapper.select(User::getId, User::getUsername, User::getDepid, User::getWorkcode, User::getLastname, User::getGender, User::getType, User::getHiredate, User::getLevel, User::getAccess, User::getPosition, User::getStatus, User::getDeleted ).in(User::getDepid, depId);
-        userMapper.selectPage(page,lambdaQueryWrapper);
-        return page.getRecords();
+    public List<UserVo> getUserByDepId(List<Integer> depId, Integer current) {
+//        LambdaQueryWrapper<User> lambdaQueryWrapper = new LambdaQueryWrapper<>();
+//        Page<User> page = new Page<>(current,10);
+//        lambdaQueryWrapper.select(User::getId, User::getUsername, User::getDepid, User::getWorkcode, User::getLastname, User::getGender, User::getType, User::getHiredate, User::getLevel, User::getAccess, User::getPosition, User::getStatus, User::getDeleted ).in(User::getDepid, depId);
+//        userMapper.selectPage(page,lambdaQueryWrapper);
+//        return page.getRecords();
+        return userMapper.getUserByDepIds(depId, current);
     }
 
     @Override

@@ -5,7 +5,13 @@ import lombok.Data;
 
 @Data
 public class UserVo {
+    private Integer id;
+
     private String username;
+
+    private String password;
+
+    private String type;
 
     private String gender;
 
@@ -19,5 +25,15 @@ public class UserVo {
 
     private Integer depid;
 
+    private String hiredate;
+
+    private Integer status;
+
+    private Integer access;
+
+    private Integer house;
+    private Integer tech;
+    private Integer meal;
+    private Integer annul;
 
 }

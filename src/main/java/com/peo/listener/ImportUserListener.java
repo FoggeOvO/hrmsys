@@ -12,7 +12,7 @@ import java.util.List;
 
 public class ImportUserListener extends AnalysisEventListener<UserVo> {
     private static final int BATCH_COUNT = 10000;
-    private List<UserVo> list = new ArrayList<>();
+    private final List<UserVo> list = new ArrayList<>();
 
     private final UserMapper userMapper;
 

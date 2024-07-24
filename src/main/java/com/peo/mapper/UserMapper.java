@@ -17,6 +17,8 @@ import java.util.List;
 public interface UserMapper extends BaseMapper<User> {
     List<UserVo> getUser(List<Integer> depIds);
     void importData(List<UserVo> list);
+
+    List<UserVo> getUserByDepIds(List<Integer> depId, Integer current);
 }
 
 

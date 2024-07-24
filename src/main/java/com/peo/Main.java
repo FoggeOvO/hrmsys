@@ -8,6 +8,8 @@ import com.baomidou.mybatisplus.extension.plugins.inner.OptimisticLockerInnerInt
 import com.baomidou.mybatisplus.extension.plugins.inner.PaginationInnerInterceptor;
 import com.peo.interceptor.DeptAuthInterceptor;
 import org.mybatis.spring.annotation.MapperScan;
+import org.springframework.boot.ApplicationRunner;
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
@@ -20,6 +22,16 @@ public class Main {
     }
 
     @Bean
+    public ApplicationRunner applicationRunner(){
+        return args -> System.out.println("applicationRunner执行了...");
+    }
+
+    @Bean
+    public CommandLineRunner commandLineRunner(){
+        return args -> System.out.println("commandRunner执行了...");
+    }
+
+    @Bean
     public MybatisPlusInterceptor mybatisPlusInterceptor(){
         MybatisPlusInterceptor mybatisPlusInterceptor = new MybatisPlusInterceptor();
         mybatisPlusInterceptor.addInnerInterceptor(new PaginationInnerInterceptor(DbType.MYSQL));
@@ -27,9 +39,9 @@ public class Main {
         mybatisPlusInterceptor.addInnerInterceptor(new OptimisticLockerInnerInterceptor());
         //防止全表更新和全表删除插件
         mybatisPlusInterceptor.addInnerInterceptor(new BlockAttackInnerInterceptor());
-        DeptAuthInterceptor deptAuthInterceptor = new DeptAuthInterceptor();
-        DataPermissionInterceptor dataPermissionInterceptor = new DataPermissionInterceptor(deptAuthInterceptor);
-        mybatisPlusInterceptor.addInnerInterceptor(dataPermissionInterceptor);
+//        DeptAuthInterceptor deptAuthInterceptor = new DeptAuthInterceptor();
+//        DataPermissionInterceptor dataPermissionInterceptor = new DataPermissionInterceptor(deptAuthInterceptor);
+//        mybatisPlusInterceptor.addInnerInterceptor(dataPermissionInterceptor);
         return mybatisPlusInterceptor;
     }
 }

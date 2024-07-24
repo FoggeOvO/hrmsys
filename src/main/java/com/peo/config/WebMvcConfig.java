@@ -8,9 +8,12 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
 public class WebMvcConfig implements WebMvcConfigurer {
-    @Autowired
+
     LoginCheckInterceptor loginCheckInterceptor;
 
+    public WebMvcConfig (LoginCheckInterceptor loginCheckInterceptor){
+        this.loginCheckInterceptor = loginCheckInterceptor;
+    }
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(loginCheckInterceptor).excludePathPatterns("/login/*");
     }

@@ -3,9 +3,11 @@ package com.peo.controller;
 import com.alibaba.fastjson2.JSONArray;
 import com.alibaba.fastjson2.JSONObject;
 import com.peo.annotation.TokenRequired;
+import com.peo.pojo.Field;
 import com.peo.pojo.User;
 import com.peo.service.AuthService;
 import com.peo.service.DeptService;
+import com.peo.service.FieldService;
 import com.peo.service.UserService;
 
 import com.peo.util.Result;
@@ -20,23 +22,25 @@ import java.util.List;
 @RequestMapping("user")
 public class UserController {
     UserService userService;
+    FieldService fieldService;
 
-    public UserController(UserService userService) {
+    public UserController(UserService userService, FieldService fieldService) {
         this.userService = userService;
+        this.fieldService = fieldService;
     }
 
     @GetMapping ("getUser")
     @TokenRequired
     public Result getUser(HttpServletRequest request) {
         String token = request.getHeader("token");
-        List<User> users = userService.getUser(token);
+        List<UserVo> users = userService.getUser(token);
         return Result.ok(users);
     }
 
     @GetMapping("getUserByDepId")
     @TokenRequired
     public Result getUserByDepId(@RequestParam List<Integer> depId, Integer current) {
-        List<User> user = userService.getUserByDepId(depId, current);
+        List<UserVo> user = userService.getUserByDepId(depId, current);
         return Result.ok(user);
     }
 
@@ -52,6 +56,13 @@ public class UserController {
     public Result getUserById(@PathVariable Integer ids) {
         User user = userService.getUserById(ids);
         return Result.ok(user);
+    }
+
+    @GetMapping("getFieldsByUserId")
+    @TokenRequired
+    public Result getFieldsByUserId(@RequestParam List<Integer> ids) {
+        List<Field> allField = fieldService.getAllField(ids);
+        return Result.ok(allField);
     }
 
     @GetMapping("getUserByAccess/{access}")

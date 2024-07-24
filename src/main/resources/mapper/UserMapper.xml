@@ -34,6 +34,15 @@
             </if>
         </where>
     </select>
+    <select id="getUserByDepIds" resultType="com.peo.vo.UserVo">
+        SELECT a.id, username, depid, workcode, lastname, gender, TYPE, hiredate, LEVEL, access, POSITION, STATUS, deleted,
+               b.* FROM t_hrm_user a LEFT JOIN t_hrm_cusfield b ON a.id = b.user_id where
+        depid IN
+            <foreach collection="depId" item="value" open="(" close=")" separator=",">
+                #{value}
+            </foreach>
+     LIMIT 1,10
+    </select>
 
     <insert id="importData" parameterType="java.util.List">
         insert into t_temp_user(username,gender,lastname,level,workcode,position,depid)
