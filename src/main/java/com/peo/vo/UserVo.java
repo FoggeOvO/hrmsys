@@ -3,6 +3,8 @@ package com.peo.vo;
 
 import lombok.Data;
 
+import java.util.List;
+
 @Data
 public class UserVo {
     private Integer id;
@@ -31,9 +33,6 @@ public class UserVo {
 
     private Integer access;
 
-    private Integer house;
-    private Integer tech;
-    private Integer meal;
-    private Integer annul;
+    private List<FieldVo> fields;
 
 }

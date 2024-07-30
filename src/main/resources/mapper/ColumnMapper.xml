@@ -6,19 +6,16 @@
 
     <resultMap id="BaseResultMap" type="com.peo.pojo.Column">
             <id property="id" column="id" jdbcType="INTEGER"/>
-            <result property="tablename" column="tablename" jdbcType="VARCHAR"/>
-            <result property="columnname" column="columnname" jdbcType="VARCHAR"/>
-            <result property="dataindex" column="dataIndex" jdbcType="VARCHAR"/>
-            <result property="key" column="key" jdbcType="VARCHAR"/>
-            <result property="title" column="title" jdbcType="VARCHAR"/>
-            <result property="visable" column="visable" jdbcType="TINYINT"/>
-            <result property="sortkey" column="sortkey" jdbcType="INTEGER"/>
-            <result property="showinmain" column="showInMain" jdbcType="TINYINT"/>
+            <result property="fieldValue" column="fieldValue" jdbcType="VARCHAR"/>
+            <result property="fieldName" column="fieldName" jdbcType="VARCHAR"/>
+            <result property="fieldWidth" column="fieldWidth" jdbcType="INTEGER"/>
+            <result property="fieldType" column="fieldType" jdbcType="INTEGER"/>
+            <result property="selectId" column="selectId" jdbcType="INTEGER"/>
+
     </resultMap>
 
     <sql id="Base_Column_List">
-        id,tablename,columnname,
-        dataIndex,key,title,
-        visable,sortkey,showInMain
+        id,fieldValue,fieldName,
+        fieldWidth,fieldType,selectId
     </sql>
 </mapper>

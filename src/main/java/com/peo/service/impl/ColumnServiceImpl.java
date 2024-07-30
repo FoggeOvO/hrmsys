@@ -1,10 +1,13 @@
 package com.peo.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.peo.pojo.Column;
 import com.peo.service.ColumnService;
 import com.peo.mapper.ColumnMapper;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
 * @author lvlvlove
@@ -15,6 +18,16 @@ import org.springframework.stereotype.Service;
 public class ColumnServiceImpl extends ServiceImpl<ColumnMapper, Column>
     implements ColumnService {
 
+    private final ColumnMapper columnMapper;
+    public ColumnServiceImpl(ColumnMapper columnMapper){
+        this.columnMapper = columnMapper;
+    }
+    @Override
+    public List<Column> getAllColumns() {
+        LambdaQueryWrapper<Column> lambdaQueryWrapper = new LambdaQueryWrapper<>();
+        lambdaQueryWrapper.select(Column::getId,Column::getFieldName,Column::getFieldValue,Column::getFieldType,Column::getFieldWidth,Column::getSelectId);
+        return columnMapper.selectList(lambdaQueryWrapper);
+    }
 }
 
 
