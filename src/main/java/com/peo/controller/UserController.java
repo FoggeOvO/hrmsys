@@ -1,19 +1,14 @@
 package com.peo.controller;
 
-import com.alibaba.fastjson2.JSONArray;
-import com.alibaba.fastjson2.JSONObject;
 import com.peo.annotation.TokenRequired;
-import com.peo.pojo.Field;
+import com.peo.pojo.CustomerField;
 import com.peo.pojo.User;
-import com.peo.service.AuthService;
-import com.peo.service.DeptService;
 import com.peo.service.FieldService;
 import com.peo.service.UserService;
 
 import com.peo.util.Result;
 import com.peo.vo.UserVo;
 import jakarta.servlet.http.HttpServletRequest;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -61,7 +56,7 @@ public class UserController {
     @GetMapping("getFieldsByUserId")
     @TokenRequired
     public Result getFieldsByUserId(@RequestParam List<Integer> ids) {
-        List<Field> allField = fieldService.getAllField(ids);
+        List<CustomerField> allField = fieldService.getAllField(ids);
         return Result.ok(allField);
     }
 

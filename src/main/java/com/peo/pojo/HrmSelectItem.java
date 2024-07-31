@@ -7,23 +7,21 @@ import lombok.Getter;
 import java.io.Serializable;
 
 /**
- * @TableName t_filed
+ * @TableName t_hrm_selectitem
  */
+
+@TableName(value ="t_hrm_selectitem")
 @Data
-@TableName(value ="t_hrm_cusfield")
-public class Field implements Serializable {
+public class HrmSelectItem implements Serializable {
     private Integer id;
 
-    private Integer userId;
+    private Integer mainid;
 
-    private String house;
+    private Integer selectValue;
 
-    private String meal;
+    private String selectName;
 
-    private Integer tech;
-
-    private Integer annul;
-
+    private Integer deleted;
 
     private static final long serialVersionUID = 1L;
 

@@ -4,17 +4,17 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.peo.mapper.FieldMapper">
 
-    <resultMap id="BaseResultMap" type="com.peo.pojo.Field">
+    <resultMap id="BaseResultMap" type="com.peo.pojo.CustomerField">
             <id property="id" column="id" jdbcType="INTEGER"/>
             <result property="userId" column="user_id" jdbcType="INTEGER"/>
-            <result property="house" column="house" jdbcType="INTEGER"/>
-            <result property="meal" column="meal" jdbcType="INTEGER"/>
-            <result property="tech" column="tech" jdbcType="INTEGER"/>
-            <result property="annul" column="annul" jdbcType="INTEGER"/>
+            <result property="field1" column="field1" jdbcType="INTEGER"/>
+            <result property="field2" column="field2" jdbcType="INTEGER"/>
+            <result property="field3" column="field3" jdbcType="INTEGER"/>
+            <result property="field4" column="field4" jdbcType="INTEGER"/>
     </resultMap>
 
     <sql id="Base_Column_List">
-        id,userId,house,
-        meal,tech,annul
+        id,userId,field1,
+        field2,field3,field4
     </sql>
 </mapper>

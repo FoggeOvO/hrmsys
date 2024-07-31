@@ -2,33 +2,27 @@ package com.peo.service.impl;
 
 
 import com.alibaba.fastjson2.JSONArray;
-import com.baomidou.mybatisplus.annotation.InterceptorIgnore;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.peo.annotation.DeptAuth;
 import com.peo.mapper.ColumnMapper;
 import com.peo.mapper.FieldMapper;
-import com.peo.mapper.LoginMapper;
+import com.peo.mapper.HrmSelectItemMapper;
 import com.peo.pojo.Column;
-import com.peo.pojo.Field;
+import com.peo.pojo.CustomerField;
+import com.peo.pojo.HrmSelectItem;
 import com.peo.pojo.User;
 import com.peo.service.DeptService;
 import com.peo.service.UserService;
 import com.peo.mapper.UserMapper;
 import com.peo.util.JSONUtil;
-import com.peo.util.JwtHelper;
-import com.peo.util.Result;
-import com.peo.util.ResultCodeEnum;
 import com.peo.vo.FieldVo;
 import com.peo.vo.UserVo;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 
 /**
@@ -42,14 +36,21 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     private final UserMapper userMapper;
     private final DeptService deptService;
     private final FieldMapper fieldMapper;
-
     private final ColumnMapper columnMapper;
+    private final HrmSelectItemMapper hrmSelectItemMapper;
 
-    public UserServiceImpl(UserMapper userMapper, DeptService deptService, FieldMapper fieldMapper, ColumnMapper columnMapper){
+    private static final int TEXT = 0;
+    private static final int CHECKBOX = 1;
+    private static final int DROPBOX = 2;
+
+
+
+    public UserServiceImpl(UserMapper userMapper, DeptService deptService, FieldMapper fieldMapper, ColumnMapper columnMapper, HrmSelectItemMapper hrmSelectItemMapper){
         this.userMapper = userMapper;
         this.deptService = deptService;
         this.fieldMapper = fieldMapper;
         this.columnMapper = columnMapper;
+        this.hrmSelectItemMapper = hrmSelectItemMapper;
     }
 
     @Override
@@ -80,21 +81,53 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
             userIds.add(user.getId());
         }
 
-        LambdaQueryWrapper<Field> fieldLambdaQueryWrapper = new LambdaQueryWrapper<>();
-        fieldLambdaQueryWrapper.select().in(Field::getUserId,userIds);
-        List<Field> fields = fieldMapper.selectList(fieldLambdaQueryWrapper);
+        LambdaQueryWrapper<CustomerField> fieldLambdaQueryWrapper = new LambdaQueryWrapper<>();
+        fieldLambdaQueryWrapper.select().in(CustomerField::getUserId,userIds);
+        List<CustomerField> customerFields = fieldMapper.selectList(fieldLambdaQueryWrapper);
         List<UserVo> userVos = new ArrayList<>();
+        List<FieldVo> fieldVos = new ArrayList<>();
 
         LambdaQueryWrapper<Column> columnLambdaQueryWrapper = new LambdaQueryWrapper<>();
         columnLambdaQueryWrapper.select(Column::getId, Column::getFieldValue, Column::getFieldName, Column::getFieldType, Column::getFieldWidth, Column::getSelectId).eq(Column::getDeleted,"0");
         List<Column> columns = columnMapper.selectList(columnLambdaQueryWrapper);
-        for(Field field : fields){
+        for(Column column : columns){
             FieldVo fieldVo = new FieldVo();
-            for(Column column : columns){
-                fieldVo.setFieldName(column.getFieldName());
-
+            for(CustomerField customerField : customerFields){
+                Class<? extends CustomerField> clazz = customerField.getClass();
+                Field[] fields = clazz.getDeclaredFields();
+                for(Field field : fields){
+                    if(field.getName().equals(column.getFieldValue())){
+                        field.setAccessible(true);
+                        Integer fieldType = column.getFieldType();
+                        switch (fieldType){
+                            case TEXT:
+                                System.out.println("1");
+                                break;
+                            case CHECKBOX:
+                                System.out.println("2");
+                                break;
+                            case DROPBOX:
+                                System.out.println("3");
+                                break;
+                            default:
+                                throw new RuntimeException();
+                        }
+                        Object filedValue;
+                        try {
+                            filedValue =  field.get(customerField);
+                        } catch (IllegalAccessException e) {
+                            throw new RuntimeException(e);
+                        }
+                        fieldVo.setFieldName(field.getName());
+                        fieldVo.setFieldValue(String.valueOf(filedValue));
+                        fieldVo.setUserId(customerField.getUserId());
+                    }
+                }
             }
+            fieldVos.add(fieldVo);
         }
+
+
         return null;
 //        return userMapper.getUserByDepIds(depId, current);
     }
@@ -130,6 +163,31 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         return userMapper.deleteById(user);
     }
 
+
+    private List<FieldVo> getFieldValue(List<CustomerField> customerFields, List<Column> columns){
+        List<FieldVo> result = new ArrayList<>();
+        for (CustomerField customerField : customerFields){
+            FieldVo fieldVo = new FieldVo();
+            Class<? extends CustomerField> clazz = customerField.getClass();
+            Field[] fields = clazz.getDeclaredFields();
+            for(Field field : fields){
+                for (Column column : columns){
+                    if(field.getName().equals(column.getFieldValue())){
+                        field.setAccessible(true);
+                    }
+                }
+            }
+        }
+        return result;
+    }
+
+    private Object getFieldValue(FieldVo fieldVo, Integer fieldType, Object filedValue, Integer selectId){
+        LambdaQueryWrapper<HrmSelectItem> hrmSelectItemLambdaQueryWrapper = new LambdaQueryWrapper<>();
+        hrmSelectItemLambdaQueryWrapper.select(HrmSelectItem::getId, HrmSelectItem::getSelectValue, HrmSelectItem::getSelectName, HrmSelectItem::getMainid)
+                .eq(HrmSelectItem::getMainid,selectId)
+                .eq(HrmSelectItem::getSelectValue,filedValue);
+        return hrmSelectItemMapper.selectOne(hrmSelectItemLambdaQueryWrapper);
+    }
 
 }
 

@@ -6,7 +6,7 @@
         <option name="generateConfig">
           <GenerateConfig>
             <option name="annotationType" value="MYBATIS_PLUS3" />
-            <option name="basePackage" value="generator" />
+            <option name="basePackage" value="com.peo" />
             <option name="basePath" value="src/main/java" />
             <option name="classNameStrategy" value="camel" />
             <option name="encoding" value="UTF-8" />
@@ -62,25 +62,13 @@
               </list>
             </option>
             <option name="needsModel" value="true" />
-            <option name="relativePackage" value="domain" />
+            <option name="relativePackage" value="pojo" />
             <option name="superClass" value="" />
             <option name="tableUIInfoList">
               <list>
                 <TableUIInfo>
-                  <option name="className" value="Column" />
-                  <option name="tableName" value="t_column" />
-                </TableUIInfo>
-                <TableUIInfo>
-                  <option name="className" value="Dept" />
-                  <option name="tableName" value="t_dept" />
-                </TableUIInfo>
-                <TableUIInfo>
-                  <option name="className" value="Filed" />
-                  <option name="tableName" value="t_filed" />
-                </TableUIInfo>
-                <TableUIInfo>
-                  <option name="className" value="User" />
-                  <option name="tableName" value="t_user" />
+                  <option name="className" value="HrmSelectitem" />
+                  <option name="tableName" value="t_hrm_selectitem" />
                 </TableUIInfo>
               </list>
             </option>

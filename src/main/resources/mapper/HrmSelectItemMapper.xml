@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.peo.mapper.HrmSelectItemMapper">
+
+    <resultMap id="BaseResultMap" type="com.peo.pojo.HrmSelectItem">
+            <id property="id" column="id" jdbcType="INTEGER"/>
+            <result property="mainid" column="mainid" jdbcType="INTEGER"/>
+            <result property="selectValue" column="select_value" jdbcType="INTEGER"/>
+            <result property="selectName" column="select_name" jdbcType="VARCHAR"/>
+            <result property="deleted" column="deleted" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,mainid,select_value,
+        select_name,deleted
+    </sql>
+</mapper>
