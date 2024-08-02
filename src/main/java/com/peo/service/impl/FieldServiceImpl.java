@@ -8,6 +8,7 @@ import com.peo.mapper.FieldMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 /**
 * @author lvlvlove
@@ -24,11 +25,17 @@ public class FieldServiceImpl extends ServiceImpl<FieldMapper, CustomerField>
         this.fieldMapper = fieldMapper;
     }
 
+//    @Override
+//    public List<Map<String, Object>> getAllField(List<Integer> userIds, List<String> columns) {
+//        LambdaQueryWrapper<CustomerField> lambdaQueryWrapper = new LambdaQueryWrapper<>();
+//        lambdaQueryWrapper.select(CustomerField::getId, CustomerField::getField1, CustomerField::getField2, CustomerField::getField3, CustomerField::getField4, CustomerField::getUserId ).in(CustomerField::getUserId, userIds);
+//        return fieldMapper.selectList(lambdaQueryWrapper);
+//
+//    }
+
     @Override
-    public List<CustomerField> getAllField(List<Integer> userIds) {
-        LambdaQueryWrapper<CustomerField> lambdaQueryWrapper = new LambdaQueryWrapper<>();
-        lambdaQueryWrapper.select(CustomerField::getId, CustomerField::getField1, CustomerField::getField2, CustomerField::getField3, CustomerField::getField4, CustomerField::getUserId ).in(CustomerField::getUserId, userIds);
-        return fieldMapper.selectList(lambdaQueryWrapper);
+    public List<Map<String, Object>> getAllField(List<Integer> userIds, List<String> columns) {
+        return fieldMapper.getAllFieldByUserId(userIds,columns);
     }
 }
 

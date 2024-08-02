@@ -17,4 +17,18 @@
         id,userId,field1,
         field2,field3,field4
     </sql>
+    <select id="getAllFieldByUserId" resultType="java.util.Map">
+          select *
+<!--              user_id,-->
+<!--              <foreach collection="columns" separator="," item="column" index="index">-->
+<!--                  ${column}-->
+<!--              </foreach>-->
+          from t_hrm_cusfield
+          <where>
+              user_id in
+          <foreach collection="userIds" item="id" separator="," index="index" open="(" close=")">
+             (#{id})
+          </foreach>
+           </where>
+    </select>
 </mapper>

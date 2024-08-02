@@ -1,9 +1,11 @@
 package com.peo.pojo;
 
 import com.baomidou.mybatisplus.annotation.*;
+import com.peo.vo.FieldVo;
 import lombok.Data;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * @TableName t_user
@@ -37,6 +39,8 @@ public class User implements Serializable {
     private Integer status;
 
     private Integer access;
+
+    private UserField userField;
 
     @TableLogic
     private Integer deleted;

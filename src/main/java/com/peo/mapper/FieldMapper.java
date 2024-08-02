@@ -2,6 +2,10 @@ package com.peo.mapper;
 
 import com.peo.pojo.CustomerField;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import org.apache.ibatis.annotations.MapKey;
+
+import java.util.List;
+import java.util.Map;
 
 /**
 * @author lvlvlove
@@ -11,6 +15,8 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 */
 public interface FieldMapper extends BaseMapper<CustomerField> {
 
+    @MapKey("")
+    List<Map<String, Object>> getAllFieldByUserId(List<Integer> userIds, List<String> columns);
 }
 
 

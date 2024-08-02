@@ -14,11 +14,11 @@ import java.util.List;
 */
 public interface UserService extends IService<User> {
 
-    List<UserVo> getUser(String token);
+    List<User> getUser(String token);
 
     Integer getUserCount(List<Integer> depId);
 
-    List<UserVo> getUserByDepId(List<Integer> depId, Integer current);
+    List<User> getUserByDepId(List<Integer> depId, Integer current);
     List<User> getUserByAccess(Integer access);
     User getUserById(Integer id);
 

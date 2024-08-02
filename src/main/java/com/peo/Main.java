@@ -7,6 +7,7 @@ import com.baomidou.mybatisplus.extension.plugins.inner.DataPermissionIntercepto
 import com.baomidou.mybatisplus.extension.plugins.inner.OptimisticLockerInnerInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.inner.PaginationInnerInterceptor;
 import com.peo.interceptor.DeptAuthInterceptor;
+import com.peo.interceptor.SqlInterceptor;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.boot.CommandLineRunner;
@@ -21,15 +22,15 @@ public class Main {
         SpringApplication.run(Main.class,args);
     }
 
-    @Bean
-    public ApplicationRunner applicationRunner(){
-        return args -> System.out.println("applicationRunner执行了...");
-    }
-
-    @Bean
-    public CommandLineRunner commandLineRunner(){
-        return args -> System.out.println("commandRunner执行了...");
-    }
+//    @Bean
+//    public ApplicationRunner applicationRunner(){
+//        return args -> System.out.println("applicationRunner执行了...");
+//    }
+//
+//    @Bean
+//    public CommandLineRunner commandLineRunner(){
+//        return args -> System.out.println("commandRunner执行了...");
+//    }
 
     @Bean
     public MybatisPlusInterceptor mybatisPlusInterceptor(){

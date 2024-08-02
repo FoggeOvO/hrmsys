@@ -28,14 +28,14 @@ public class UserController {
     @TokenRequired
     public Result getUser(HttpServletRequest request) {
         String token = request.getHeader("token");
-        List<UserVo> users = userService.getUser(token);
+        List<User> users = userService.getUser(token);
         return Result.ok(users);
     }
 
     @GetMapping("getUserByDepId")
     @TokenRequired
     public Result getUserByDepId(@RequestParam List<Integer> depId, Integer current) {
-        List<UserVo> user = userService.getUserByDepId(depId, current);
+        List<User> user = userService.getUserByDepId(depId, current);
         return Result.ok(user);
     }
 
@@ -53,12 +53,6 @@ public class UserController {
         return Result.ok(user);
     }
 
-    @GetMapping("getFieldsByUserId")
-    @TokenRequired
-    public Result getFieldsByUserId(@RequestParam List<Integer> ids) {
-        List<CustomerField> allField = fieldService.getAllField(ids);
-        return Result.ok(allField);
-    }
 
     @GetMapping("getUserByAccess/{access}")
     @TokenRequired

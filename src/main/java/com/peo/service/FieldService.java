@@ -4,6 +4,7 @@ import com.peo.pojo.CustomerField;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 import java.util.List;
+import java.util.Map;
 
 /**
 * @author lvlvlove
@@ -11,5 +12,5 @@ import java.util.List;
 * @createDate 2024-01-26 11:13:43
 */
 public interface FieldService extends IService<CustomerField> {
-    List<CustomerField> getAllField(List<Integer> userIds);
+    List<Map<String,Object>> getAllField(List<Integer> userIds, List<String> columns);
 }
