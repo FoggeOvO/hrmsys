@@ -1,6 +1,7 @@
 package com.peo.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.peo.annotation.TokenRequired;
 import com.peo.mapper.LoginMapper;
 import com.peo.pojo.User;
 import com.peo.service.AuthService;
@@ -38,6 +39,7 @@ public class AuthBizHandler implements AuthService {
     }
 
     @Override
+    @TokenRequired
     public ServerResponse getCurrentUser(ServerRequest request)  {
         String token = request.headers().header("token").get(0);
         Integer userId = jwtHelper.getUserId(token).intValue();

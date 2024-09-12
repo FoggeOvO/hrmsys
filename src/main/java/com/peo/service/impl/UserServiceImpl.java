@@ -75,21 +75,22 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         userMapper.selectPage(page, lambdaQueryWrapper);
 
         List<User> records = page.getRecords();
-        List<Integer> userIds = new ArrayList<>();
-        for (User user : records) {
-            userIds.add(user.getId());
-        }
+        if(!records.isEmpty()){
+            List<Integer> userIds = new ArrayList<>();
+            for (User user : records) {
+                userIds.add(user.getId());
+            }
 
-        //这里可以用Mybatis Plus获取到t_sys_field登记得自定义字段信息
-        LambdaQueryWrapper<Column> columnLambdaQueryWrapper = new LambdaQueryWrapper<>();
-        columnLambdaQueryWrapper.select(Column::getId, Column::getFieldValue, Column::getFieldName, Column::getFieldType, Column::getFieldWidth, Column::getSelectId).eq(Column::getDeleted, "0");
-        List<Column> columns = columnMapper.selectList(columnLambdaQueryWrapper);
+            //这里可以用Mybatis Plus获取到t_sys_field登记得自定义字段信息
+            LambdaQueryWrapper<Column> columnLambdaQueryWrapper = new LambdaQueryWrapper<>();
+            columnLambdaQueryWrapper.select(Column::getId, Column::getFieldValue, Column::getFieldName, Column::getFieldType, Column::getFieldWidth, Column::getSelectId).eq(Column::getDeleted, "0");
+            List<Column> columns = columnMapper.selectList(columnLambdaQueryWrapper);
 
 
-        List<String> cols = new ArrayList<>();
-        for (Column column : columns) {
-            cols.add(column.getFieldValue());
-        }
+            List<String> cols = new ArrayList<>();
+            for (Column column : columns) {
+                cols.add(column.getFieldValue());
+            }
 
 
 /*
@@ -117,17 +118,19 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         ]
 
  */
-        List<Map<String, Object>> allFieldByUserId = fieldMapper.getAllFieldByUserId(userIds, cols);
+            List<Map<String, Object>> allFieldByUserId = fieldMapper.getAllFieldByUserId(userIds, cols);
 
 
-        for (Map<String, Object> field : allFieldByUserId) {
-            UserField userField = getFieldShowName(field, columns);
-            for (User user : records) {
-                if (Objects.equals(userField.getUserId(), user.getId())) {
-                    user.setUserField(userField);
+            for (Map<String, Object> field : allFieldByUserId) {
+                UserField userField = getFieldShowName(field, columns);
+                for (User user : records) {
+                    if (Objects.equals(userField.getUserId(), user.getId())) {
+                        user.setUserField(userField);
+                    }
                 }
             }
         }
+
 
         return records;
     }
@@ -191,6 +194,10 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
                         case DROPBOX:
                             //方法getFieldValue,传入selectId和FieldValue.返回得到的选项作为字段显示值
                             HrmSelectItem hrmSelectItem = getFieldShow(realValue, selectId);
+                            if(hrmSelectItem == null){
+                                fieldVo.setFieldShow(realValue);
+                                break;
+                            }
                             fieldVo.setFieldShow(hrmSelectItem.getSelectName());
                             break;
                         default:
